@@ -1,18 +1,21 @@
-import { MemberListResolver } from './_resolvers/member-list.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { Routes } from '@angular/router';
-
-import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { AuthGuard } from './_guards/auth.guard';
+
+import { MemberListResolver } from './_resolvers/member-list.resolver';
+import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
+import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 
 import { HomeComponent } from './home/home.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ListsComponent } from './lists/lists.component';
 
 export const appRoutes: Routes = [
   {
-    path: '',
+    path: 'home',
     component: HomeComponent
   },
   {
@@ -23,12 +26,18 @@ export const appRoutes: Routes = [
       {
         path: 'members',
         component: MemberListComponent,
-        resolve: {users: MemberListResolver}
+        resolve: { users: MemberListResolver }
       },
       {
         path: 'members/:id',
         component: MemberDetailComponent,
-        resolve: {user: MemberDetailResolver}
+        resolve: { user: MemberDetailResolver }
+      },
+      {
+        path: 'member/edit',
+        component: MemberEditComponent,
+        resolve: { user: MemberEditResolver },
+        canDeactivate: [PreventUnsavedChanges]
       },
       {
         path: 'messages',
@@ -37,12 +46,12 @@ export const appRoutes: Routes = [
       {
         path: 'lists',
         component: ListsComponent
-      },
-      {
-        path: '**',
-        redirectTo: '',
-        pathMatch: 'full'
       }
     ]
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
+    pathMatch: 'full'
   }
 ];
