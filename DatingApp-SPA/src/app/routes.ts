@@ -12,6 +12,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ListsComponent } from './lists/lists.component';
+import { ListsResolver } from './_resolvers/lists.resolver';
 
 export const appRoutes: Routes = [
   {
@@ -45,7 +46,8 @@ export const appRoutes: Routes = [
       },
       {
         path: 'lists',
-        component: ListsComponent
+        component: ListsComponent,
+        resolve: {users: ListsResolver}
       }
     ]
   },
