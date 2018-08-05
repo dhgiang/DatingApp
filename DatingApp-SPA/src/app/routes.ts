@@ -13,6 +13,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MessagesComponent } from './messages/messages.component';
 import { ListsComponent } from './lists/lists.component';
 import { ListsResolver } from './_resolvers/lists.resolver';
+import { MessagesResolver } from './_resolvers/messagse.resolver';
 
 export const appRoutes: Routes = [
   {
@@ -42,12 +43,13 @@ export const appRoutes: Routes = [
       },
       {
         path: 'messages',
-        component: MessagesComponent
+        component: MessagesComponent,
+        resolve: { messages: MessagesResolver }
       },
       {
         path: 'lists',
         component: ListsComponent,
-        resolve: {users: ListsResolver}
+        resolve: { users: ListsResolver }
       }
     ]
   },
